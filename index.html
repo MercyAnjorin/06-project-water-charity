@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waterdrop.io</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <main class="game-shell">
+        <section id="game-world" aria-label="Waterdrop game area">
+            <header class="hud top-hud">
+                <div class="title-group">
+                    <h1 class="game-title">Waterdrop.io</h1>
+                    <a class="sponsor-line" href="https://www.charitywater.org/main" target="_blank" rel="noopener noreferrer">
+                        <img src="img/cw_logo.png" alt="charity: water logo" class="sponsor-logo">
+                        <span>Sponsored by charity: water</span>
+                    </a>
+                </div>
+                <div class="score-wrap">Score: <span id="score">0</span></div>
+                <div class="impact-wrap">Impact: <span id="impact">0</span> families helped</div>
+            </header>
+
+            <section class="hud bottom-left" aria-live="polite">
+                <p class="lives-label">Lives</p>
+                <div id="lives" class="lives" role="img" aria-label="6 lives remaining"></div>
+            </section>
+
+            <section class="hud bottom-right controls" aria-label="game controls">
+                <button id="settings-btn" class="mini-btn" type="button">Settings</button>
+                <button id="menu-btn" class="mini-btn" type="button">Menu</button>
+                <button id="help-btn" class="mini-btn" type="button">Help</button>
+            </section>
+
+            <section id="start-screen" class="screen visible" aria-live="polite">
+                <h2 id="start-title">Waterdrop.io</h2>
+                <p class="start-copy">Click anywhere to start</p>
+                <p class="mission-copy">Catch clean drops to bring clean water to more communities.</p>
+            </section>
+
+            <section id="game-over-screen" class="screen" aria-live="polite" aria-hidden="true">
+                <h2>Game Over</h2>
+                <p>Final Score: <strong id="final-score">0</strong></p>
+                <p id="fact-line" class="fact-line"></p>
+                <div class="end-actions">
+                    <button id="play-again-btn" type="button">Play Again</button>
+                    <a class="learn-more" href="https://www.charitywater.org/main" target="_blank" rel="noopener noreferrer">Learn about clean water</a>
+                </div>
+            </section>
+
+            <section id="modal-panel" class="modal" aria-hidden="true">
+                <div class="modal-content">
+                    <h3 id="modal-title"></h3>
+                    <p id="modal-text"></p>
+                    <div id="settings-controls" class="settings-controls" hidden>
+                        <p class="settings-label">Sound</p>
+                        <button id="sound-toggle-btn" type="button" class="sound-toggle" aria-pressed="true">
+                            <span id="sound-toggle-icon">🔊</span>
+                            <span id="sound-toggle-label">ON</span>
+                        </button>
+                    </div>
+                    <button id="close-modal-btn" type="button">Close</button>
+                </div>
+            </section>
+
+            <div id="bucket" aria-label="bucket"></div>
+        </div>
+    </main>
+    
+    <script src="script.js"></script>
+</body>
+</html>
