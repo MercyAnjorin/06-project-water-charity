@@ -19,8 +19,27 @@ const settingsControls = document.getElementById("settings-controls");
 const soundToggleBtn = document.getElementById("sound-toggle-btn");
 const soundToggleIcon = document.getElementById("sound-toggle-icon");
 const soundToggleLabel = document.getElementById("sound-toggle-label");
+const difficultyButtons = Array.from(document.querySelectorAll(".difficulty-btn"));
 
 const MAX_LIVES = 6;
+
+const DIFFICULTY_MODES = {
+  easy: {
+    spawnRateMultiplier: 1.28,
+    speedMultiplier: 0.82,
+    dropsPerWave: 1
+  },
+  normal: {
+    spawnRateMultiplier: 1,
+    speedMultiplier: 1,
+    dropsPerWave: 1
+  },
+  hard: {
+    spawnRateMultiplier: 0.72,
+    speedMultiplier: 1.27,
+    dropsPerWave: 2
+  }
+};
 
 const facts = [
   "Clean water improves health, school attendance, and opportunity.",
@@ -44,7 +63,8 @@ const state = {
   bucketX: 0,
   soundsEnabled: true,
   pointerActive: false,
-  audioCtx: null
+  audioCtx: null,
+  difficulty: "normal"
 };
 
 function init() {
@@ -193,10 +213,15 @@ function clearDrops() {
 
 function updateDifficulty() {
   const t = state.elapsed / 1000;
+  const profile = DIFFICULTY_MODES[state.difficulty] || DIFFICULTY_MODES.normal;
+  const baseSpawnEvery = Math.max(290, 900 - t * 18);
+  const baseMinSpeed = Math.min(420, 140 + t * 6);
+  const baseMaxSpeed = Math.min(650, 220 + t * 7.5);
+
   state.pollutedChance = Math.min(0.65, 0.22 + t * 0.0053);
-  state.spawnEvery = Math.max(290, 900 - t * 18);
-  state.minSpeed = Math.min(420, 140 + t * 6);
-  state.maxSpeed = Math.min(650, 220 + t * 7.5);
+  state.spawnEvery = baseSpawnEvery * profile.spawnRateMultiplier;
+  state.minSpeed = baseMinSpeed * profile.speedMultiplier;
+  state.maxSpeed = baseMaxSpeed * profile.speedMultiplier;
 }
 
 function gameFrame(ts) {
@@ -213,7 +238,10 @@ function gameFrame(ts) {
 
   while (state.spawnTimer >= state.spawnEvery) {
     state.spawnTimer -= state.spawnEvery;
-    spawnDrop();
+    const profile = DIFFICULTY_MODES[state.difficulty] || DIFFICULTY_MODES.normal;
+    for (let i = 0; i < profile.dropsPerWave; i += 1) {
+      spawnDrop();
+    }
   }
 
   for (let i = state.drops.length - 1; i >= 0; i -= 1) {
@@ -332,16 +360,36 @@ function updateSoundToggle() {
   soundToggleLabel.textContent = on ? "ON" : "OFF";
 }
 
+function updateDifficultyButtons() {
+  difficultyButtons.forEach((button) => {
+    const selected = button.dataset.difficulty === state.difficulty;
+    button.setAttribute("aria-pressed", String(selected));
+  });
+}
+
+function setDifficulty(mode) {
+  if (!DIFFICULTY_MODES[mode]) return;
+  state.difficulty = mode;
+  updateDifficultyButtons();
+}
+
 settingsBtn.addEventListener("pointerdown", (e) => e.stopPropagation());
 settingsBtn.addEventListener("click", () => {
   updateSoundToggle();
-  openModal("Settings", "", true);
+  updateDifficultyButtons();
+  openModal("Settings", "Adjust sound and difficulty.", true);
 });
 
 soundToggleBtn.addEventListener("click", () => {
   state.soundsEnabled = !state.soundsEnabled;
   unlockAudio();
   updateSoundToggle();
+});
+
+difficultyButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    setDifficulty(button.dataset.difficulty);
+  });
 });
 
 menuBtn.addEventListener("pointerdown", (e) => e.stopPropagation());

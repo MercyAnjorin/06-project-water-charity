@@ -1,6 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
-
 :root {
+    --font-main: Georgia, "Times New Roman", Times, serif;
     --cw-yellow: #ffc907;
     --cw-blue: #2e9df7;
     --cw-light-blue: #8bd1cb;
@@ -24,7 +23,8 @@ body {
         radial-gradient(circle at 20% 15%, #fff7d8 0%, transparent 35%),
         radial-gradient(circle at 80% 10%, #d7f0ff 0%, transparent 28%),
         linear-gradient(150deg, #e5f5ff 0%, #f4fbff 55%, #fff5cf 100%);
-    font-family: "Press Start 2P", "Courier New", monospace;
+    font-family: var(--font-main);
+    font-weight: 700;
     color: var(--ink);
     padding: 16px;
     line-height: 1.35;
@@ -153,7 +153,7 @@ body {
     border-radius: 999px;
     background: #fff;
     color: var(--ink);
-    font-family: "Press Start 2P", "Courier New", monospace;
+    font-family: var(--font-main);
     font-size: 0.5rem;
     font-weight: 700;
     padding: 8px 12px;
@@ -231,7 +231,7 @@ body {
     border-radius: 999px;
     background: var(--cw-yellow);
     color: #1a2a38;
-    font-family: "Press Start 2P", "Courier New", monospace;
+    font-family: var(--font-main);
     font-size: 0.5rem;
     font-weight: 700;
     padding: 8px 12px;
@@ -275,13 +275,24 @@ body {
 
 .settings-controls {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
     gap: 14px;
     background: #f0f7ff;
     border-radius: 10px;
     padding: 10px 14px;
     margin-bottom: 14px;
+}
+
+.setting-row {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.difficulty-row {
+    align-items: flex-start;
 }
 
 .settings-label {
@@ -299,7 +310,7 @@ body {
     border-radius: 999px;
     background: var(--cw-blue);
     color: #fff;
-    font-family: "Press Start 2P", "Courier New", monospace;
+    font-family: var(--font-main);
     font-size: 0.5rem;
     padding: 7px 14px;
     cursor: pointer;
@@ -312,6 +323,47 @@ body {
     background: #e0e0e0;
     border-color: #aaa;
     color: #555;
+}
+
+.difficulty-options {
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.difficulty-btn {
+    border: 2px solid #d2dbe3;
+    border-radius: 999px;
+    background: #fff;
+    font-family: var(--font-main);
+    font-size: 0.45rem;
+    padding: 7px 10px;
+    cursor: pointer;
+    transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
+}
+
+.difficulty-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 12px rgba(17, 35, 50, 0.18);
+}
+
+.difficulty-btn.easy {
+    color: #1a9a41;
+}
+
+.difficulty-btn.normal {
+    color: #b68b00;
+}
+
+.difficulty-btn.hard {
+    color: #cf2f2f;
+}
+
+.difficulty-btn[aria-pressed="true"] {
+    border-color: currentColor;
+    box-shadow: 0 0 0 2px rgba(17, 35, 50, 0.08);
+    background: #f9fcff;
 }
 
 #bucket {
@@ -345,18 +397,20 @@ body {
     z-index: 4;
     width: 24px;
     height: 34px;
-    border-radius: 50% 50% 52% 52%;
-    transform: rotate(9deg);
+    clip-path: polygon(50% 0%, 66% 22%, 84% 44%, 95% 66%, 86% 86%, 68% 97%, 50% 100%, 32% 97%, 14% 86%, 5% 66%, 16% 44%, 34% 22%);
+    border-radius: 0 0 46% 46%;
+    overflow: hidden;
+    transform: none;
 }
 
 .drop.clean {
-    background: radial-gradient(circle at 38% 28%, #f0fcff 0%, #67c8ff 43%, #2185cf 100%);
-    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.27);
+    background: radial-gradient(circle at 38% 36%, #7ec8f0 0%, #5aaedf 52%, #2c7fbe 76%, #0f4f8f 100%);
+    box-shadow: 0 0 0 2px rgba(7, 52, 98, 0.55), 0 2px 6px rgba(6, 37, 67, 0.3);
 }
 
 .drop.polluted {
-    background: radial-gradient(circle at 38% 28%, #d8f4ce 0%, #5cbf4c 44%, #217f2f 100%);
-    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.24);
+    background: radial-gradient(circle at 38% 36%, #9ad782 0%, #68b653 54%, #2f8439 78%, #165a24 100%);
+    box-shadow: 0 0 0 2px rgba(18, 79, 33, 0.55), 0 2px 6px rgba(13, 54, 24, 0.3);
 }
 
 .splash {
@@ -483,6 +537,15 @@ body {
     .mission-copy,
     .fact-line {
         font-size: 0.58rem;
+    }
+
+    .setting-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .difficulty-options {
+        justify-content: flex-start;
     }
 }
 

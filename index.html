@@ -53,11 +53,21 @@
                     <h3 id="modal-title"></h3>
                     <p id="modal-text"></p>
                     <div id="settings-controls" class="settings-controls" hidden>
-                        <p class="settings-label">Sound</p>
-                        <button id="sound-toggle-btn" type="button" class="sound-toggle" aria-pressed="true">
-                            <span id="sound-toggle-icon">🔊</span>
-                            <span id="sound-toggle-label">ON</span>
-                        </button>
+                        <div class="setting-row">
+                            <p class="settings-label">Sound</p>
+                            <button id="sound-toggle-btn" type="button" class="sound-toggle" aria-pressed="true">
+                                <span id="sound-toggle-icon">🔊</span>
+                                <span id="sound-toggle-label">ON</span>
+                            </button>
+                        </div>
+                        <div class="setting-row difficulty-row">
+                            <p class="settings-label">Difficulty</p>
+                            <div class="difficulty-options" role="radiogroup" aria-label="Select game difficulty">
+                                <button id="difficulty-easy" type="button" class="difficulty-btn easy" data-difficulty="easy" aria-pressed="false">Easy</button>
+                                <button id="difficulty-normal" type="button" class="difficulty-btn normal" data-difficulty="normal" aria-pressed="true">Normal</button>
+                                <button id="difficulty-hard" type="button" class="difficulty-btn hard" data-difficulty="hard" aria-pressed="false">Hard</button>
+                            </div>
+                        </div>
                     </div>
                     <button id="close-modal-btn" type="button">Close</button>
                 </div>
